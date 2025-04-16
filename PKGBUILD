@@ -40,7 +40,11 @@ depends=(
 )
 makedepends=(
   bzip2
+  fig2dev
+  git
+  imagemagick
   libassuan
+  librsvg
   npth
   pcsclite
   readline
@@ -51,7 +55,7 @@ optdepends=(
 )
 install=$pkgname.install
 source=(
-  https://gnupg.org/ftp/gcrypt/$pkgname/$pkgname-$pkgver.tar.bz2{,.sig}
+  git+https://dev.gnupg.org/source/gnupg.git?signed#tag=${pkgname}-${pkgver}
   dirmngr{,@}.{service,socket}
   gpg-agent{,@}.{service,socket}
   gpg-agent-{browser,extra,ssh}{,@}.socket
@@ -62,8 +66,7 @@ source=(
   $pkgname-2.4-keep-systemd-support.patch
   $pkgname-2.4-keyboxd-systemd-support.patch
 )
-sha256sums=('7b24706e4da7e0e3b06ca068231027401f238102c41c909631349dcc3b85eb46'
-            'SKIP'
+sha256sums=('4e946396a8a3cf8e0b997c5ea87e5732efdc7fee2037d96b0eeb911cd350dab0'
             '80a3a80f9f1f337da555a6838483e1baca44cde8a8a3d8c4ba7743626304b981'
             '8374255ce93a3c343019ab425963bcbc41982ea89e669d1ad1df0aa7be810de1'
             'ca55048f992824a24ab7f61cbc44a713a153f70a1a60d1cbba7ab4440302a204'
@@ -87,8 +90,7 @@ sha256sums=('7b24706e4da7e0e3b06ca068231027401f238102c41c909631349dcc3b85eb46'
             'ef2267eecd9eb59bbbbdb97d55cbfe10236b4979a125c6683a840830bc202905'
             '677ca409e8ece61e64a94102a2b71ec119941b5ae0f0ed4f1c4f2c0c2bdd158a'
             'e0aff9f80abb6059e41cb3bb7cc86b7aa3fc1c27626676385c5479d69ef830a1')
-b2sums=('4cdc6be4330b0c8f150d9d1a9ce9c7d34232ecf9b980b15fbd20e96ff6fcd8665688456d66f1c862b816472034eaa0796444357b1f36e75e8520a603a0e6b298'
-        'SKIP'
+b2sums=('2c53de51bdde9c7107b6cad253ee552987c43a1f8969e7888fb7017811260b62ad7e06fd470693a8a768bf690b596d514b50795add3a27f3587d5fe439e7518e'
         '7a3af856305eb4b00929aaf029dd4e5c84376df4f30add76976b9b058addf6fc4d8c39335fc83d11493ea9d8a40f0510dbac8572b99a8c8b9b3a4eca8e585774'
         'ee51a4702715f5ec2629ff42eeba8630010da8a67545d1e53961e710de5faf197708e55d2d55796917a134ca2a76b1d6c88a8f7756d0706e0cbc33b605f52d86'
         '3f40de2bf73e84f099b542349257ef6c098b4e347fb218d21a2a785830aa335832229b24c74aadae73deff5460f8645e2d7e7c3c2faaeb91cc812eeb06ddca84'
@@ -120,7 +122,7 @@ validpgpkeys=(
 )
 
 prepare() {
-  cd $pkgname-$pkgver
+  cd $pkgname
 
   local src
   for src in "${source[@]}"; do
@@ -131,16 +133,13 @@ prepare() {
     patch -Np1 < "../$src"
   done
 
-  # improve reproducibility
-  rm doc/gnupg.info*
-
   sed -n '5, 28 p' COPYING.other > MIT.txt
   sed -n '30, 60 p' COPYING.other > BSD-4-Clause.txt
   sed -n '62, 92 p' COPYING.other > BSD-3-Clause.txt
   sed -n '95, 125 p' COPYING.other > BSD-2-Clause.txt
   sed -n '128, 160 p' COPYING.other > Unicode-TOU.txt
 
-  ./autogen.sh
+  sh autogen.sh
 }
 
 build() {
@@ -152,13 +151,13 @@ build() {
     --sysconfdir=/etc
   )
 
-  cd $pkgname-$pkgver
+  cd $pkgname
   ./configure "${configure_options[@]}"
   make
 }
 
 check() {
-  cd $pkgname-$pkgver
+  cd $pkgname
   make check
 }
 
@@ -170,7 +169,7 @@ package() {
     readline libreadline.so
   )
 
-  cd $pkgname-$pkgver
+  cd $pkgname
   make DESTDIR="$pkgdir" install
   ln -s gpg "$pkgdir"/usr/bin/gpg2
   ln -s gpgv "$pkgdir"/usr/bin/gpgv2
