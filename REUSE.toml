@@ -33,6 +33,7 @@ path = [
     "0008-gpg-default-El-Gamal-to-3072-bit-keys.patch",
     "0009-gpg-Always-support-and-default-to-using-SHA-512.patch",
     "0010-gpg-Prefer-SHA-512-and-SHA-384-in-personal-digest-pr.patch",
+    "0012-Disallow-compressed-signatures-and-certificates.patch",
     "0011-Avoid-simple-memory-dumps-via-ptrace.patch",
     "0013-ssh-agent-emulation-under-systemd-inject-SSH_AUTH_SO.patch",
     "0014-gpg-Sync-compliance-mode-cleanup-with-master.patch",
