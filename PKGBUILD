@@ -348,7 +348,6 @@ prepare() {
     -n \
       '5, 28 p' \
     "COPYING.other" > \
-
     "MIT.txt"
   sed \
     -n \
