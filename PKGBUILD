@@ -170,7 +170,7 @@ fi
 _tarname="${_pkg}-${_tag}"
 _tarfile="${_pkg}-${_tag}.${_archive_format}"
 if [[ "${_git}" == "true" ]]; then
-  _src="${_tarfile}::${_url}#${_tag_name}=${_tag}"
+  _src="${_tarfile}::git+${_url}#${_tag_name}=${_tag}"
   if [[ "${_tag_name}" == "tag" ]]; then
     _sum='383fd9720a966825b9d5e45a2b49b3b340ebed356252c73cca242b26dffec0ba'
     _b2_sum='c6b16d797b13e91c4f3eb41d28a69a5854e1744eaac662058cc5332b69b90349a79b891895b7460027bd6234394a4caf36f800d20a74c696a049764112f00658'
