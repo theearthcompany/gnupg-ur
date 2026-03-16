@@ -158,13 +158,14 @@ elif [[ "${_ns}" == "freepg" ]]; then
   _url="https://gitlab.com/${_ns}/${_pkg}"
 fi
 _tag_name="commit"
-if [[ "${_tag}" == "commit" ]]; then
+if [[ "${_tag_name}" == "commit" ]]; then
   _tag="${_commit}"
 elif [[ "${_tag_name}" == "tag" ]]; then
   if [[ "${_ns}" == "gnupg" ]]; then
     _tag="${_pkg}-${pkgver}"
   elif [[ "${_ns}" == "freepg" ]]; then
     _tag="${_pkg}-${pkgver}-freepg"
+  fi
 fi
 _tarname="${_pkg}-${_tag}"
 _tarfile="${_pkg}-${_tag}.${_archive_format}"
@@ -176,6 +177,7 @@ if [[ "${_git}" == "true" ]]; then
   elif [[ "${_tag_name}" == "commit" ]]; then
     _sum="SKIP"
     _b2_sum="SKIP"
+  fi
 fi
 source=(
   "${_src}"
