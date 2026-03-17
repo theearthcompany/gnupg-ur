@@ -638,7 +638,7 @@ jobs:
               -C \
                 "${HOME}/fur-src" \
               PREFIX="/usr" \
-              install 
+              install-scripts
       - name:
           Installs build dependencies.
         run: |
@@ -1244,7 +1244,7 @@ jobs:
             "${HOME}/fur-src"
           make \
             PREFIX="/usr" \
-            install 
+            install-scripts
       # - name:
       #     Gets the actual repo source because somehow it is missing for this container.
       #   run: |
@@ -1449,7 +1449,7 @@ jobs:
             "reallymakepkg"
           make \
             PREFIX="/usr" \
-            install
+            install-scripts
           cd \
            ".."
       - name:
