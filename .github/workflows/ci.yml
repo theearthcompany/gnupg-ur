@@ -638,7 +638,7 @@ jobs:
               -C \
                 "${HOME}/fur-src" \
               PREFIX="/usr" \
-              install-scripts
+              install-fur
       - name:
           Installs build dependencies.
         run: |
@@ -1244,7 +1244,7 @@ jobs:
             "${HOME}/fur-src"
           make \
             PREFIX="/usr" \
-            install-scripts
+            install-fur
       # - name:
       #     Gets the actual repo source because somehow it is missing for this container.
       #   run: |
@@ -1452,6 +1452,21 @@ jobs:
             install-scripts
           cd \
            ".."
+      - name:
+          Installs latest stable Fur.
+        run: |
+          git \
+            clone \
+              --branch="main" \
+              --single-branch \
+              --depth=1 \
+              "https://github.com/themartiancompany/fur" \
+              "fur-src"
+          cd \
+            "fur-src"
+          make \
+            PREFIX="/usr" \
+            install-fur
       - name:
           Installs build dependencies.
         run: |
