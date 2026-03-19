@@ -715,7 +715,6 @@ jobs:
             make \
               -C \
                 "${HOME}/reallymakepkg-src" \
-              PREFIX="/usr" \
               install-configs || \
             true
           /entrypoint.sh \
