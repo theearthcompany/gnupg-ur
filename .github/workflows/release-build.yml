@@ -756,13 +756,17 @@ jobs:
       - name:
           Installs build dependencies.
         run: |
+          ( _evmfs="false" \
+              recipe-get \
+                -v \
+                "PKGBUILD" \
+                "makedepends" || \
+            true ) > \
+            "makedepends"
           export \
             _pkgs="$( \
-              _evmfs="false" \
-              /entrypoint.sh \
-                recipe-get \
-                  "PKGBUILD" \
-                  "makedepends")"
+              cat \
+                "makedepends")"
           for _pkg in ${_pkgs}; do
             _depend_name="$( \
               /entrypoint.sh \
@@ -1448,18 +1452,17 @@ jobs:
           Installs build dependencies.
         run: |
           ls
-          _evmfs="false" \
-            recipe-get \
-              -v \
-              "PKGBUILD" \
-              "makedepends"
-          export \
-            _pkgs="$( \
-              _evmfs="false" \
+          ( _evmfs="false" \
               recipe-get \
+                -v \
                 "PKGBUILD" \
                 "makedepends" || \
-              true)"
+            true ) > \
+            "makedepends"
+          export \
+            _pkgs="$( \
+              cat \
+                "makedepends")"
           echo \
             "Depends found: '${pkgs}'"
           for _pkg in ${_pkgs}; do
@@ -1772,12 +1775,17 @@ jobs:
             "recipe-get" \
               "PKGBUILD" \
               "makedepends" || \
-            true
+          true
+          ( _evmfs="false" \
+              recipe-get \
+                -v \
+                "PKGBUILD" \
+                "makedepends" || \
+            true ) > \
+            "makedepends"
           export \
             _pkgs="$( \
-              _evmfs="false" \
-              "recipe-get" \
-                "PKGBUILD" \
+              cat \
                 "makedepends")"
           for _pkg in ${_pkgs}; do
             export \
