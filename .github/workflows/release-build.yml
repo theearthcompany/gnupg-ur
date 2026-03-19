@@ -1447,6 +1447,12 @@ jobs:
       - name:
           Installs build dependencies.
         run: |
+          ls
+          _evmfs="false" \
+            recipe-get \
+              -v \
+              "PKGBUILD" \
+              "makedepends"
           export \
             _pkgs="$(
               _evmfs="false" \
