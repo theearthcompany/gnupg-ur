@@ -2237,6 +2237,7 @@ jobs:
           mkdir \
             "temp"
           cp \
+            -r \
             * \
             "temp"
           dos2unix \
@@ -2245,13 +2246,14 @@ jobs:
             "PKGBUILD" \
             "PKBUILD.windows"
           cp \
+            -r \
             "temp/"* \
             "."
           mv \
             "PKGBUILD.windows" \
             "PKGBUILD"
           rm \
-            -r \
+            -rf \
             "temp"
           # export \
           #   _pkgbase="$( \
