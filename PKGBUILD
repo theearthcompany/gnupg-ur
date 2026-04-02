@@ -1,8 +1,8 @@
-#  SPDX-License-Identifier: AGPL-3.0
+# SPDX-License-Identifier: AGPL-3.0
 
 #    ----------------------------------------------------------------------
 #    Copyright © 2024, 2025, 2026  Pellegrino Prevete
-#   
+#
 #    All rights reserved
 #    ----------------------------------------------------------------------
 #
@@ -18,7 +18,6 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
 
 # Maintainers:
 #   Truocolo
@@ -55,6 +54,23 @@ elif [[ "${_os}" == "GNU/Linux" ]]; then
   _libc="glibc"
   _compiler="gcc"
   _libcompiler="libgcc"
+elif [[ "${_os}" == "Msys" ]]; then
+  _libc="msys2-w32api-runtime"
+  _libc_headers="msys2-w32api-headers"
+  _compiler="gcc"
+  _libcompiler="gcc-libs"
+  _sh="sh"
+else
+  _msg=(
+    "Unknown os '${_os}'."
+  )
+  msg \
+    "${_msg[*]}"
+  _libc="msys2-w32api-runtime"
+  _libc_headers="msys2-w32api-headers"
+  _compiler="gcc"
+  _libcompiler="gcc-libs"
+  _sh="sh"
 fi
 _evmfs_available="$(
   command \
@@ -121,7 +137,7 @@ _2_5_18_commit="1b8362889a522bbcfeb80ef3af61218db216f62b"
 _2_5_18_freepg_commit="756502e158cc2742a956333997037f72ee5ff40f"
 _commit="${_2_5_18_freepg_commit}"
 _libassuan_pkgver="3.0.2"
-pkgrel=43
+pkgrel=44
 _pkgdesc=(
   'Complete and free implementation'
   'of the OpenPGP standard.'
@@ -176,6 +192,12 @@ makedepends=(
   "${_compiler}"
   "${_libcompiler}"
 )
+if [[ "${_os}" == "Msys" ]]; then
+  makedepends+=(
+    "${_libc_headers}"
+    "windows-default-manifest"
+  )
+fi
 if [[ "${_git}" == "true" ]]; then
   makedepends+=(
     "git" 
