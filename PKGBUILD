@@ -147,7 +147,7 @@ _2_5_18_commit="1b8362889a522bbcfeb80ef3af61218db216f62b"
 _2_5_18_freepg_commit="756502e158cc2742a956333997037f72ee5ff40f"
 _commit="${_2_5_18_freepg_commit}"
 _libassuan_pkgver="3.0.2"
-pkgrel=65
+pkgrel=66
 _pkgdesc=(
   'Complete and free implementation'
   'of the OpenPGP standard.'
@@ -509,7 +509,7 @@ _android_fix() {
         -rl \
         -e \
           "\b/bin/sh\b" \
-        "${srcdir}/${_tarname}" || \
+        "." || \
       true)
   for _file in "${_makefiles[@]}"; do \
     _msg=(
@@ -520,10 +520,10 @@ _android_fix() {
       "${_msg[*]}"
     if [[ -e "${_file}" ]]; then
       sed \
-        "s%/bin/sh%${_shell}%g" \
+        -e \
+          "s%/bin/sh%${_shell}%g" \
         -i \
-        "${_file}" || \
-        true
+        "${_file}"
     else
       _msg=(
         "Somehow '${_file}' seems"
