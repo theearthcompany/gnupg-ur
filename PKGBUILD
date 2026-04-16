@@ -554,7 +554,24 @@ prepare() {
 
 build() {
   local \
-    _configure_opts=()
+    _configure_opts=() \
+    _os \
+    _shell
+  _os="$(
+    uname \
+      -o)"
+  if [[ "${_os}" == "Android" ]]; then
+    _shell="$(
+      command \
+        -v \
+        "bash")"
+    echo \
+      "Android shell: '${_shell}'."
+    # Fix caused by the issue described at
+    # https://github.com/termux/termux-packages/29379
+    export \
+      SHELL="${_shell}"
+  fi
   _configure_opts=(
     --enable-g13
     --enable-large-secmem  # prerequisite for large RSA keys
