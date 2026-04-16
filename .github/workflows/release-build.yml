@@ -944,6 +944,7 @@ jobs:
             ${{ secrets.GITHUB_TOKEN }}
         run: |
           /entrypoint.sh \
+            GH_TOKEN="${GITHUB_TOKEN}" \
             bash \
               ".github/gur-mini" \
               "themartiancompany" \
