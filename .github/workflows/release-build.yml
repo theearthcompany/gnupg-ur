@@ -938,6 +938,30 @@ jobs:
                   "PKGBUILD" \
                   "pkgname")"
       - name:
+          Target specific libassuan while the CI issue is not solved.
+        env:
+          GITHUB_TOKEN:
+            ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          /entrypoint \
+            bash \
+              ".github/gur-mini" \
+              "themartiancompany" \
+              "libassuan" \
+              "3.0.2-32"
+      - name:
+          Target specific fig2dev while the CI issue is not solved.
+        env:
+          GITHUB_TOKEN:
+            ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          /entrypoint \
+            bash \
+              ".github/gur-mini" \
+              "themartiancompany" \
+              "fig2dev" \
+              "3.2.9.1-17"
+      - name:
           Installs build dependencies.
         env:
           GH_TOKEN:
