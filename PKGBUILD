@@ -147,7 +147,7 @@ _2_5_18_commit="1b8362889a522bbcfeb80ef3af61218db216f62b"
 _2_5_18_freepg_commit="756502e158cc2742a956333997037f72ee5ff40f"
 _commit="${_2_5_18_freepg_commit}"
 _libassuan_pkgver="3.0.2"
-pkgrel=66
+pkgrel=67
 _pkgdesc=(
   'Complete and free implementation'
   'of the OpenPGP standard.'
@@ -462,7 +462,7 @@ _android_fix() {
     "./autogen.sh"
   mapfile \
     -d \
-    $'\n' \
+    '\n' \
     _bin_files < \
     <(grep \
         -rl \
@@ -471,7 +471,7 @@ _android_fix() {
       true)
   mapfile \
     -d \
-    $'\n' \
+    '\n' \
     _bin_files < \
     <(grep \
         -rl \
@@ -480,7 +480,7 @@ _android_fix() {
       true)
   mapfile \
     -d \
-    $'\n' \
+    '\n' \
     _usr_bin_files < \
     <(grep \
         -rl \
@@ -503,7 +503,7 @@ _android_fix() {
   done
   mapfile \
     -d \
-    $'\n' \
+    '\n' \
     _makefiles < \
     <(grep \
         -rl \
