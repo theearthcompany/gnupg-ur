@@ -36,6 +36,7 @@ _gur_mini() {
     _namespace="${1}" \
     _repo="${2}" \
     _tag \
+    _arch \
     _project_id \
     _gl_dl_opts=() \
     _api \
@@ -43,34 +44,57 @@ _gur_mini() {
     _urls=() \
     _job_latest \
     _output_file \
-    _token_private
+    _token_private \
+    _repo_url \
+    _os
   shift \
     2
   _tag=""
   if (( 0 < "${#}" )); then
     _tag="${1}"
   fi
-  _gh_opts+=(
-    --repo
-      "${_namespace}/${_repo}-ur"
-  )
-  if [[ "${_tag}" == "" ]]; then
-    _msg=(
-      "[gur-mini] ERROR:"
-      "A tag must be specified."
-    )
-    echo \
-      "${_msg[*]}" >&2
-    return \
-      1
+  shift
+  _arch=""
+  if (( 0 < "${#}" )); then
+    _arch="${1}"
   fi
-  gh \
-    "${_gh_opts[@]}" \
-    release \
-      download \
-      "${_tag}" \
-      --pattern \
-        '*.pkg.tar.xz'
+  shift
+  _pkgname="${1}"
+  if (( 0 < "${#}" )); then
+    _pkgname="${1}"
+  fi
+  _os="$(
+    uname \
+      -o)"
+  if [[ "${_os}" == "Android" ]]; then
+    _repo_url="https://github.com/${_namespace}/${_repo}-ur"
+    _releases_dir="${_repo_url}/releases/download/${_tag}/"
+    _url="${_releases_dir}/dogeos-android-${_pkgname}-${_tag}-${_arch}.pkg.tar.xz"
+  wget \
+    "${_url}"
+  elif [[ "${_os}" != "Android" ]]; then
+    _gh_opts+=(
+      --repo
+        "${_namespace}/${_repo}-ur"
+    )
+    if [[ "${_tag}" == "" ]]; then
+      _msg=(
+        "[gur-mini] ERROR:"
+        "A tag must be specified."
+      )
+      echo \
+        "${_msg[*]}" >&2
+      return \
+        1
+    fi
+    gh \
+      "${_gh_opts[@]}" \
+      release \
+        download \
+        "${_tag}" \
+        --pattern \
+          '*.pkg.tar.xz'
+  fi
 }
 
 _usage() {

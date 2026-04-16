@@ -679,6 +679,16 @@ jobs:
               --overwrite="*" \
               "ca-certificates" || \
             true
+      - name:
+          Installs wget.
+        run: |
+          /entrypoint.sh \
+            pacman \
+              -Sy \
+              --noconfirm \
+              --overwrite="*" \
+              "wget" || \
+            true
       - uses:
           actions/checkout@v4.2.2
       - name:
@@ -959,7 +969,9 @@ jobs:
               ".github/gur-mini" \
               "themartiancompany" \
               "libassuan" \
-              "3.0.2-32"
+              "3.0.2-32" \
+              "${{ matrix.architecture }}" \
+              "libassuan"
       - name:
           Target specific fig2dev while the CI issue is not solved.
         env:
@@ -971,7 +983,9 @@ jobs:
               ".github/gur-mini" \
               "themartiancompany" \
               "fig2dev" \
-              "3.2.9.1-17"
+              "3.2.9.1-17" \
+              "${{ matrix.architecture }}" \
+              "fig2dev"
       - name:
           Installs build dependencies.
         env:
