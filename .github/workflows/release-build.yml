@@ -669,6 +669,16 @@ jobs:
               --overwrite="*" \
               "coreutils" || \
             true
+      - name:
+          Installs CA certificates.
+        run: |
+          /entrypoint.sh \
+            pacman \
+              -Sy \
+              --noconfirm \
+              --overwrite="*" \
+              "ca-certificates" || \
+            true
       - uses:
           actions/checkout@v4.2.2
       - name:
