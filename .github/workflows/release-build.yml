@@ -958,27 +958,6 @@ jobs:
                   "PKGBUILD" \
                   "pkgname")"
       - name:
-          Target specific libassuan while the CI issue is not solved.
-        env:
-          GITHUB_TOKEN:
-            ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          /entrypoint.sh \
-            GH_TOKEN="${GITHUB_TOKEN}" \
-            bash \
-              ".github/gur-mini" \
-              "themartiancompany" \
-              "libassuan" \
-              "3.0.2-32" \
-              "${{ matrix.architecture }}" \
-              "libassuan"
-          /entrypoint.sh \
-            pacman \
-              -Udd \
-              --noconfirm \
-              --overwrite="*" \
-              "dogeos-android-libassuan"*".pkg.tar."*
-      - name:
           Target specific fig2dev while the CI issue is not solved.
         env:
           GITHUB_TOKEN:
@@ -1055,6 +1034,28 @@ jobs:
                 "${_pkg}" || \
               true
           done
+      # Upgrading libassuan without gnupg breaks pacman
+      - name:
+          Target specific libassuan while the CI issue is not solved.
+        env:
+          GITHUB_TOKEN:
+            ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          /entrypoint.sh \
+            GH_TOKEN="${GITHUB_TOKEN}" \
+            bash \
+              ".github/gur-mini" \
+              "themartiancompany" \
+              "libassuan" \
+              "3.0.2-32" \
+              "${{ matrix.architecture }}" \
+              "libassuan"
+          /entrypoint.sh \
+            pacman \
+              -Udd \
+              --noconfirm \
+              --overwrite="*" \
+              "dogeos-android-libassuan"*".pkg.tar."*
       - name:
           Builds the Android package.
         run: |
